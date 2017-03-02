@@ -7,10 +7,12 @@ var app = new Vue({
         ],
         test: '',
         activedView: 1,
+        formType: 'insert',
         bill: {
             date_due: '',
             name: '',
-            value: 0
+            value: 0,
+            done: 0
         },
         billNames: [
             'Conta de Luz',
@@ -45,10 +47,29 @@ var app = new Vue({
     methods: {
         showView: function (id) {
             this.activedView = id;
+            if(id == 1){
+                this.formType = 'insert';
+            }
         },
         submit: function() {
-            this.bills.push(this.bill);
+            if(this.formType == 'insert'){
+                this.bills.push(this.bill);
+            }
+            // cria um novo objeto para não ficar vinculado ao da listagem,
+            // senão você acaba editando sempre o mesmo objeto.
+            this.bill = {
+                date_due: '',
+                name: '',
+                value: 0,
+                done: 0
+            };
+
             this.activedView = 0;
+        },
+        loadBill: function(o) {
+            this.bill = o;
+            this.activedView = 1;
+            this.formType = 'update';
         }
     }
 
