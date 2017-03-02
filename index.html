@@ -11,26 +11,36 @@
         </li>
     </ul>
 </nav>
-<table border="1" cellpadding="5">
-    <thead>
-    <tr>
-        <th>#</th>
-        <th>Vencimento</th>
-        <th>Nome</th>
-        <th>Valor</th>
-    </tr>
-    </thead>
-    <tbody>
-    <!-- <tr v-for="o in bills"> para fazer for sem o indice -->
-    <tr v-for="(index,o) in bills">
-        <td>{{index}}</td>
-        <td>{{o.date_due}}</td>
-        <td>{{o.name}}</td>
-        <td>{{o.value}}</td>
-        <td>{{o.done}}</td>
-    </tr>
-    </tbody>
-</table>
+<div v-if="activedView == 0">
+    <table border="1" cellpadding="5">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Vencimento</th>
+            <th>Nome</th>
+            <th>Valor</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- <tr v-for="o in bills"> para fazer for sem o indice -->
+        <tr v-for="(index,o) in bills">
+            <td>{{index}}</td>
+            <td>{{o.date_due}}</td>
+            <td>{{o.name}}</td>
+            <td>{{o.value}}</td>
+            <td>{{o.done}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<!-- <div  v-else> poderia utilzar assim para else -->
+<div  v-if="activedView == 1">
+    <form name="form">
+        Test:<input type="text">
+    </form>
+
+</div>
+
 <script type="text/javascript" src="node_modules/vue/dist/vue.min.js"></script>
 <script type="text/javascript" src="app.js"></script>
 </body>
