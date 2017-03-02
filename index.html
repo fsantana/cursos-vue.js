@@ -9,14 +9,14 @@
         .nao-pago{
             color: red;
         }
-        .minha-classe {
-            font-weight: bold;
+        .sem-contas {
+            color: gray;
         }
     </style>
 </head>
 <body id="app">
 <h1>{{ title }}</h1>
-<h3>{{ status }}</h3>
+<h3 class="{{statusCssClass}}">{{ status }}</h3>
 <nav>
     <ul>
         <li v-for="o in menus">
@@ -43,11 +43,13 @@
             <td>{{o.date_due}}</td>
             <td>{{o.name}}</td>
             <td>{{o.value | currency 'R$ '}}</td>
-            <td class="minha-classe" :class="{'pago' : o.done , 'nao-pago': !o.done}">
+            <td  :class="{'pago' : o.done , 'nao-pago': !o.done}">
                 {{o.done | doneLabel }}
             </td>
             <td>
                 <a href="#" @click.prevent="loadBill(o)">Editar</a>
+                <a href="#" @click.prevent="deleteBill(o)">Excluir</a>
+
             </td>
         </tr>
         </tbody>
@@ -69,6 +71,9 @@
         <br/><br/>
         <label>Valor:</label>
         <input type="text" v-model="bill.value"/>
+        <br/><br/>
+        <label>Paga:</label>
+        <input type="checkbox" v-model="bill.done"/>
         <br/><br/>
         <input type="submit" value="Enviar">
     </form>

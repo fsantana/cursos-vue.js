@@ -10,7 +10,7 @@ var app = new Vue({
         menus: [
             {id: 0, name: "Listar Contas"}, {id: 1, name: "Criar Contas"}
         ],
-        test: '',
+        statusCssClass: 'sem-contas',
         activedView: 0,
         formType: 'insert',
         bill: {
@@ -41,11 +41,17 @@ var app = new Vue({
     computed: {
         status: function () {
             var count = 0;
+            if(this.bills.length == 0){
+                this.statusCssClass = 'sem-contas';
+                return 'Nenhuma conta cadastrada';
+            }
             for (var i in this.bills) {
                 if (!this.bills[i].done) {
                     count++;
                 }
             }
+
+            this.statusCssClass = !count ? 'pago' : 'nao-pago';
             return !count ? 'Nenhum conta a pagar' : 'Existem ' + count + ' a serem pagas';
         }
     },
@@ -75,6 +81,17 @@ var app = new Vue({
             this.bill = o;
             this.activedView = 1;
             this.formType = 'update';
+        },
+        deleteBill: function(o) {
+            if(confirm('Deseja excluir a conta de '+o.name+' com vencimento em '+o.date_due+' ?')){
+                for (var i in this.bills) {
+                    if (this.bills[i] == o) {
+                        this.bills.splice(i,1);
+                        break;
+                    }
+                }
+            }
+
         }
     }
 
