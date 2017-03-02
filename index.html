@@ -1,5 +1,18 @@
 <html>
 <head>
+    <meta charset="utf-8">
+    <title>Contas a pagar</title>
+    <style type="text/css">
+        .pago{
+            color: green;
+        }
+        .nao-pago{
+            color: red;
+        }
+        .minha-classe {
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body id="app">
 <h1>{{ title }}</h1>
@@ -30,14 +43,17 @@
             <td>{{o.date_due}}</td>
             <td>{{o.name}}</td>
             <td>{{o.value | currency 'R$ '}}</td>
-            <td>{{o.done | doneLabel }}</td>
+            <td class="minha-classe" :class="{'pago' : o.done , 'nao-pago': !o.done}">
+                {{o.done | doneLabel }}
+            </td>
             <td>
                 <a href="#" @click.prevent="loadBill(o)">Editar</a>
             </td>
         </tr>
         </tbody>
     </table>
-    <cite>Documentação para filtros : http://v1.vuejs.org/api/#Filters</cite>
+    <cite><b>shortcodes</b><br>
+        v-on = @<br> v-bind = : <br> <br>Documentação para filtros : http://v1.vuejs.org/api/#Filters</cite>
 
 </div>
 <!-- <div  v-else> poderia utilzar assim para else -->
@@ -48,7 +64,7 @@
         <br><br>
         <label>Nome:</label>
         <select v-model="bill.name">
-            <option v-for="o in billNames" value="{{o}}">{{o}}</option>
+            <option v-for="o in billNames" :value="o">{{o}}</option>
         </select>
         <br/><br/>
         <label>Valor:</label>
