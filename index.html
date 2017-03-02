@@ -29,14 +29,16 @@
             <td>{{index}}</td>
             <td>{{o.date_due}}</td>
             <td>{{o.name}}</td>
-            <td>{{o.value}}</td>
-            <td>{{o.done}}</td>
+            <td>{{o.value | currency 'R$ '}}</td>
+            <td>{{o.done | doneLabel }}</td>
             <td>
                 <a href="#" @click.prevent="loadBill(o)">Editar</a>
             </td>
         </tr>
         </tbody>
     </table>
+    <cite>Documentação para filtros : http://v1.vuejs.org/api/#Filters</cite>
+
 </div>
 <!-- <div  v-else> poderia utilzar assim para else -->
 <div  v-if="activedView == 1">

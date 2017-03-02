@@ -1,3 +1,8 @@
+
+Vue.filter('doneLabel', function (value) {
+    return value == 0 ? 'Não Paga' : 'Paga';
+});
+
 var app = new Vue({
     el: "#app",
     data: {
@@ -6,7 +11,7 @@ var app = new Vue({
             {id: 0, name: "Listar Contas"}, {id: 1, name: "Criar Contas"}
         ],
         test: '',
-        activedView: 1,
+        activedView: 0,
         formType: 'insert',
         bill: {
             date_due: '',
@@ -26,7 +31,7 @@ var app = new Vue({
         bills: [
             {date_due: '20/08/2016', name: 'Conta de Luz', value: 75.95, done: 1},
             {date_due: '21/08/2016', name: 'Conta de Água', value: 22.50, done: 0},
-            {date_due: '22/08/2016', name: 'Conta de Telefone', value: 75.60, done: 0},
+            {date_due: '22/08/2016', name: 'Conta de Telefone', value: 75.60, done: 1},
             {date_due: '23/08/2016', name: 'Supermercado', value: 225.99, done: 0},
             {date_due: '24/08/2016', name: 'Cartão de Crédito', value: 1267.99, done: 0},
             {date_due: '25/08/2016', name: 'Empréstimo', value: 100.00, done: 0},
@@ -73,4 +78,4 @@ var app = new Vue({
         }
     }
 
-})
+});
