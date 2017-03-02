@@ -35,3 +35,10 @@ var app = new Vue({
     }
 
 })
+
+app.$watch('test', function(novoValor,antigoValor){
+    console.log('antigoValor:'+antigoValor+" , novoValor:"+novoValor);
+});
+app.$watch('test', function(novoValor){
+    console.log("novoValor:"+novoValor);
+});
