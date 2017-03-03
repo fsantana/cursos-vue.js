@@ -17,7 +17,7 @@ var app = new Vue({
             date_due: '',
             name: '',
             value: 0,
-            done: 0
+            done: false
         },
         billNames: [
             'Conta de Luz',
@@ -29,13 +29,13 @@ var app = new Vue({
             'Gasolina',
         ],
         bills: [
-            {date_due: '20/08/2016', name: 'Conta de Luz', value: 75.95, done: 1},
-            {date_due: '21/08/2016', name: 'Conta de Água', value: 22.50, done: 0},
-            {date_due: '22/08/2016', name: 'Conta de Telefone', value: 75.60, done: 1},
-            {date_due: '23/08/2016', name: 'Supermercado', value: 225.99, done: 0},
-            {date_due: '24/08/2016', name: 'Cartão de Crédito', value: 1267.99, done: 0},
-            {date_due: '25/08/2016', name: 'Empréstimo', value: 100.00, done: 0},
-            {date_due: '26/08/2016', name: 'Gasolina', value: 130.25, done: 0}
+            {date_due: '20/08/2016', name: 'Conta de Luz', value: 75.95, done: true},
+            {date_due: '21/08/2016', name: 'Conta de Água', value: 22.50, done: false},
+            {date_due: '22/08/2016', name: 'Conta de Telefone', value: 75.60, done: true},
+            {date_due: '23/08/2016', name: 'Supermercado', value: 225.99, done: false},
+            {date_due: '24/08/2016', name: 'Cartão de Crédito', value: 1267.99, done: false},
+            {date_due: '25/08/2016', name: 'Empréstimo', value: 100.00, done: false},
+            {date_due: '26/08/2016', name: 'Gasolina', value: 130.25, done: false}
         ],
     },
     computed: {
@@ -52,7 +52,7 @@ var app = new Vue({
             }
 
             this.statusCssClass = !count ? 'pago' : 'nao-pago';
-            return !count ? 'Nenhum conta a pagar' : 'Existem ' + count + ' a serem pagas';
+            return !count ? 'Nenhuma conta a pagar' : 'Existem ' + count + ' a serem pagas';
         }
     },
     methods: {
@@ -72,7 +72,7 @@ var app = new Vue({
                 date_due: '',
                 name: '',
                 value: 0,
-                done: 0
+                done: false
             };
 
             this.activedView = 0;
@@ -82,17 +82,10 @@ var app = new Vue({
             this.activedView = 1;
             this.formType = 'update';
         },
-        deleteBill: function(o) {
-            if(confirm('Deseja excluir a conta de '+o.name+' com vencimento em '+o.date_due+' ?')){
-                for (var i in this.bills) {
-                    if (this.bills[i] == o) {
-                        this.bills.splice(i,1);
-                        break;
-                    }
-                }
+        deleteBill: function(bill) {
+            if(confirm('Deseja excluir a conta de '+bill.name+' com vencimento em '+bill.date_due+' ?')){
+                this.bills.$remove(bill);
             }
-
         }
     }
-
 });
