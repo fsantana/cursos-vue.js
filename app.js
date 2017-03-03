@@ -12,25 +12,25 @@ var menuComponent = Vue.extend({
             </ul>
         </nav>
         `,
-        data: function () {
-            return {
-                menus: [
-                    {id: 0, name: "Listar Contas"}, {id: 1, name: "Criar Contas"}
-                ],
+    data: function () {
+        return {
+            menus: [
+                {id: 0, name: "Listar Contas"}, {id: 1, name: "Criar Contas"}
+            ],
+        }
+    },
+    methods: {
+        showView: function (id) {
+            this.$parent.activedView = id;
+            // this.$root.children[0].activedView = id; navengando do componente principal até os filhos
+            if (id == 1) {
+                this.$parent.formType = 'insert';
             }
-        },
-         methods: {
-             showView: function (id) {
-                 this.$parent.activedView = id;
-                 // this.$root.children[0].activedView = id; navengando do componente principal até os filhos
-                 if (id == 1) {
-                     this.$parent.formType = 'insert';
-                 }
-             }
-         }
-})
-Vue.component('menu-component', menuComponent);
-var appComponent = Vue.extend({
+        }
+    }
+});
+Vue.component('menu-component',menuComponent);
+Vue.component('app-component',{
     template: `
     <style type="text/css">
         .pago{
@@ -179,7 +179,6 @@ var appComponent = Vue.extend({
         }
     }
 });
-Vue.component('app-component',appComponent);
 var app = new Vue({
     el: "#app",
 
