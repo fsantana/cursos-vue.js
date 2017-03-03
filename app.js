@@ -20,10 +20,10 @@ var menuComponent = Vue.extend({
     },
     methods: {
         showView: function (id) {
-            this.$parent.activedView = id;
+            this.$dispatch('change-activedView', id)
             // this.$root.children[0].activedView = id; navengando do componente principal até os filhos
             if (id == 1) {
-                this.$parent.formType = 'insert';
+                this.$dispatch('change-formType', 'insert');
             }
         }
     }
@@ -86,14 +86,19 @@ var billListComponent = Vue.extend({
     },
     methods: {
         loadBill: function (bill) {
-            this.$parent.bill = bill;
-            this.$parent.activedView = 1;
-            this.$parent.formType = 'update';
+            this.$dispatch('change-bill', bill);
+            this.$dispatch('change-activedView', 1);
+            this.$dispatch('change-formType', 'update');
         },
         deleteBill: function (bill) {
             if (confirm('Deseja excluir a conta de ' + bill.name + ' com vencimento em ' + bill.date_due + ' ?')) {
                 this.bills.$remove(bill);
             }
+        }
+    },
+    events: {
+        'new-bill': function (bill) {
+            this.bills.push(bill);
         }
     }
 });
@@ -119,9 +124,9 @@ var billCreateComponent = Vue.extend({
         <input type="submit" value="Enviar">
     </form>
 `,
-    props:['bill','formType'], //faz com que um componente interno esteja disponivel em outro escopo, os valores sao passados por property bind na chamada do componente
     data: function () {
         return {
+            formType: 'insert',
             billNames: [
                 'Conta de Luz',
                 'Conta de Água',
@@ -131,12 +136,18 @@ var billCreateComponent = Vue.extend({
                 'Empréstimo',
                 'Gasolina',
             ],
+            bill: {
+                date_due: '',
+                name: '',
+                value: 0,
+                done: false
+            },
         }
     },
     methods: {
         submit: function () {
             if (this.formType == 'insert') {
-                this.$parent.$refs.billListComponent.bills.push(this.bill);
+                this.$dispatch('new-bill', this.bill);
             }
             // cria um novo objeto para não ficar vinculado ao da listagem,
             // senão você acaba editando sempre o mesmo objeto.
@@ -147,17 +158,25 @@ var billCreateComponent = Vue.extend({
                 done: false
             };
 
-            this.$parent.activedView = 0;
+            this.$dispatch('change-activedView', 0);
         },
+    },
+    events: {
+        'change-formType': function (formType) {
+            this.formType = formType;
+        },
+        'change-bill': function (bill) {
+            this.bill = bill;
+        }
     }
 });
 
 
 var appComponent = Vue.extend({
-    components:{
+    components: {
         'menu-component': menuComponent,
         'bill-list-component': billListComponent,
-        'bill-create-component' : billCreateComponent
+        'bill-create-component': billCreateComponent
     },
     template: `
     <style type="text/css">
@@ -178,27 +197,16 @@ var appComponent = Vue.extend({
 
 <div v-show="activedView == 0">
     <bill-list-component v-ref:bill-list-component></bill-list-component>
-    <cite><b>shortcodes</b><br>
-        v-on = @<br> v-bind = : <br> <br>Documentação para filtros : http://v1.vuejs.org/api/#Filters</cite>
 </div>
 <!-- <div  v-else> poderia utilzar assim para else -->
 <div  v-show="activedView == 1">
-    <!-- o data bind usando o .sync faz com que ele trabalhe com two way data binding avaliar sempre qual a necessidade 
-    no data binding em um sentido o elemento vai para o componente mas se alterado não altera na origem-->
-   <bill-create-component :bill.sync="bill" :form-type="formType"></bill-create-component>
+   <bill-create-component></bill-create-component>
 </div>`,
     data: function () {
         return {
             title: "Contas a pagar",
             statusCssClass: 'sem-contas',
-            activedView: 0,
-            formType: 'insert',
-            bill: {
-                date_due: '',
-                name: '',
-                value: 0,
-                done: false
-            },
+            activedView: 0
         }
     },
     computed: {
@@ -217,6 +225,20 @@ var appComponent = Vue.extend({
 
             this.statusCssClass = !count ? 'livre-de-contas' : 'com-contas';
             return !count ? 'Nenhuma conta a pagar' : 'Existem ' + count + ' a serem pagas';
+        }
+    },
+    events: {
+        'change-activedView': function (activedView) {
+            this.activedView = activedView;
+        },
+        'change-formType': function (formType) {
+            this.$broadcast('change-formType', formType);
+        },
+        'new-bill': function (bill) {
+            this.$broadcast('new-bill', bill);
+        },
+        'change-bill': function (bill) {
+            this.$broadcast('change-bill', bill);
         }
     }
 });
