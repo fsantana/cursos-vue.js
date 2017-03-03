@@ -2,16 +2,51 @@
 Vue.filter('doneLabel', function (value) {
     return value == 0 ? 'Não Paga' : 'Paga';
 });
+var menuComponent = Vue.extend({
+    template: `
+        <nav>
+            <ul>
+                <li v-for="o in menus">
+                    <a href="#" @click.prevent="showView(o.id)">{{o.name}}</a>
+                </li>
+            </ul>
+        </nav>
+        `,
+        data: function () {
+            return {
+                menus: [
+                    {id: 0, name: "Listar Contas"}, {id: 1, name: "Criar Contas"}
+                ],
+            }
+        },
+         methods: {
+             showView: function (id) {
+                 this.$parent.activedView = id;
+                 // this.$root.children[0].activedView = id; navengando do componente principal até os filhos
+                 if (id == 1) {
+                     this.$parent.formType = 'insert';
+                 }
+             }
+         }
+})
+Vue.component('menu-component', menuComponent);
 var appComponent = Vue.extend({
-    template: `<h1>{{ title }}</h1>
+    template: `
+    <style type="text/css">
+        .pago{
+            color: green;
+        }
+        .nao-pago{
+            color: red;
+        }
+        .sem-contas {
+            color: gray;
+        }
+    </style>
+
+<h1>{{ title }}</h1>
 <h3 class="{{statusCssClass}}">{{ status }}</h3>
-<nav>
-    <ul>
-        <li v-for="o in menus">
-            <a href="#" @click.prevent="showView(o.id)">{{o.name}}</a>
-        </li>
-    </ul>
-</nav>
+<menu-component></menu-component>
 <div v-if="activedView == 0">
     <table border="1" cellpadding="5">
         <thead>
@@ -70,9 +105,6 @@ var appComponent = Vue.extend({
     data: function(){
         return {
             title: "Contas a pagar",
-            menus: [
-                {id: 0, name: "Listar Contas"}, {id: 1, name: "Criar Contas"}
-            ],
             statusCssClass: 'sem-contas',
             activedView: 0,
             formType: 'insert',
@@ -120,12 +152,6 @@ var appComponent = Vue.extend({
         }
     },
     methods: {
-        showView: function (id) {
-            this.activedView = id;
-            if(id == 1){
-                this.formType = 'insert';
-            }
-        },
         submit: function() {
             if(this.formType == 'insert'){
                 this.bills.push(this.bill);
