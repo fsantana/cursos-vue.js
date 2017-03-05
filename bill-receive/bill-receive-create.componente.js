@@ -1,4 +1,4 @@
-window.billCreateComponent = Vue.extend({
+window.billReceiveCreateComponent = Vue.extend({
     template: `
     <form name="form" @submit.prevent="submit">
         <label>Vencimento:</label>
@@ -12,7 +12,7 @@ window.billCreateComponent = Vue.extend({
         <label>Valor:</label>
         <input type="text" v-model="bill.value"/>
         <br/><br/>
-        <label>Paga:</label>
+        <label>Recebido:</label>
         <input type="checkbox" v-model="bill.done"/>
         <br/><br/>
         <input type="submit" value="Enviar">
@@ -22,24 +22,21 @@ window.billCreateComponent = Vue.extend({
         return {
             formType: 'insert',
             billNames: [
-                'Conta de Luz',
-                'Conta de Água',
-                'Conta de Telefone',
-                'Supermercado',
-                'Cartão de Crédito',
-                'Empréstimo',
-                'Gasolina',
+                'Salário',
+                'Bonificação',
+                'Extras',
             ],
             bill: {
-                date_due: '',
+                date_receive: '',
                 name: '',
                 value: 0,
                 done: false
             },
+            bills: this.$root.$children[0].billsReceive,
         }
     },
     created: function () {
-        if(this.$route.name == 'bill.update'){
+        if(this.$route.name == 'bill-receive.update'){
             this.formType = 'update';
             this.getBill(this.$route.params.index);
         }
@@ -47,23 +44,20 @@ window.billCreateComponent = Vue.extend({
     methods: {
         submit: function () {
             if (this.formType == 'insert') {
-                this.$root.$children[0].bills.push(this.bill);
+                this.bills.push(this.bill);
             }
-            // cria um novo objeto para não ficar vinculado ao da listagem,
-            // senão você acaba editando sempre o mesmo objeto.
             this.bill = {
-                date_due: '',
+                date_receive: '',
                 name: '',
                 value: 0,
                 done: false
             };
 
-            this.$router.go({name: 'bill.list'});
+            this.$router.go({name: 'bill-receive.list'});
 
         },
         getBill: function(index){
-            var bills = this.$root.$children[0].bills
-            this.bill = bills[index];
+            this.bill = this.bills[index];
         }
     }
 });

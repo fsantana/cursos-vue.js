@@ -1,24 +1,21 @@
-window.billListComponent = Vue.extend({
+window.billReceiveListComponent = Vue.extend({
     template: `
     <style type="text/css">
         .pago{
             color: blue;
         }
-        .nao-pago{
+        .nao-recebido{
             color: orange;
-        }
-        .sem-contas {
-            color: gray;
         }
     </style>
         <table border="1" cellpadding="5">
             <thead>
             <tr>
                 <th>#</th>
-                <th>Vencimento</th>
+                <th>Recebimento</th>
                 <th>Nome</th>
                 <th>Valor</th>
-                <th>Paga?</th>
+                <th>Recebido?</th>
                 <th>Ação</th>
             </tr>
             </thead>
@@ -33,7 +30,7 @@ window.billListComponent = Vue.extend({
                     {{o.done | doneLabel }}
                 </td>
                 <td>
-                    <a href="#" v-link="{name : 'bill.update', params: {index: index}}">Editar</a>
+                    <a href="#" v-link="{name : 'bill-receive.update', params: {index: index}}">Editar</a>
                     <a href="#" @click.prevent="deleteBill(o)">Excluir</a>
     
                 </td>
@@ -42,7 +39,7 @@ window.billListComponent = Vue.extend({
         </table>`,
     data: function () {
         return {
-            bills: this.$root.$children[0].bills
+            bills: this.$root.$children[0].billsReceive
         }
     },
     methods: {

@@ -1,6 +1,6 @@
-window.appComponent = Vue.extend({
+window.billReceiveComponent = Vue.extend({
     components: {
-        'menu-component': menuComponent,
+        'menu-component': billReceiveMenuComponent,
     },
     template: `
     <style type="text/css">
@@ -8,7 +8,7 @@ window.appComponent = Vue.extend({
             color: green;
         }
         .com-contas{
-            color: red;
+            color: blue;
         }
         .sem-contas {
             color: gray;
@@ -22,13 +22,13 @@ window.appComponent = Vue.extend({
 `,
     data: function () {
         return {
-            title: "Contas a pagar",
+            title: "Contas a Receber",
             statusCssClass: 'sem-contas'
         }
     },
     computed: {
         status: function () {
-            var bills = this.$root.$children[0].bills;
+            var bills = this.$root.$children[0].billsReceive;
             var count = 0;
             if (bills.length == 0) {
                 this.statusCssClass = 'sem-contas';
@@ -41,7 +41,7 @@ window.appComponent = Vue.extend({
             }
 
             this.statusCssClass = !count ? 'livre-de-contas' : 'com-contas';
-            return !count ? 'Nenhuma conta a pagar' : 'Existem ' + count + ' a serem pagas';
+            return !count ? 'Nenhuma conta a receber' : 'Existem ' + count + ' a receber';
         }
     }
 });
