@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Básico de rotas </title>
+</head>
+<body id="app">
+<nav>
+    <li><a v-link="{path: '/lista'}">Lista</a></li>
+    <li><a v-link="{path: '/objeto/create'}">Pagina 1</a></li>
+</nav>
+<router-view></router-view>
+<script type="text/javascript" src="node_modules/vue/dist/vue.min.js"></script>
+<script type="text/javascript" src="node_modules/vue-router/dist/vue-router.min.js"></script>
+<script type="text/javascript">
+    var pagina1 = Vue.extend({
+        template: 'Conteudo pagina de lista'
+    });
+
+    var pagina2 = Vue.extend({
+        template: 'Conteudo pagina com form'
+    });
+
+    var app = Vue.extend({});
+
+    var router = new VueRouter();
+
+    router.map({
+        '/lista':{
+            component: pagina1
+        },
+        '/objeto/create':{
+            component: pagina2
+        }
+    })
+
+    router.start(app,'#app');
+
+
+</script>
+</body>
+</html>
