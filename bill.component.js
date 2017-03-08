@@ -1,5 +1,6 @@
 window.billComponent = Vue.extend({
     template: `
+        <h1>Contas a Pagar e Receber</h1>
         <nav>
             <ul>
                 <li v-for="o in menus">
@@ -18,4 +19,5 @@ window.billComponent = Vue.extend({
             ],
         }
     },
+
 });

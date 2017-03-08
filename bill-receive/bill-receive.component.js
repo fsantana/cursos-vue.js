@@ -15,33 +15,44 @@ window.billReceiveComponent = Vue.extend({
         }
     </style>
 
-<h1>{{ title }}</h1>
-<h3 class="{{statusCssClass}}">{{ status }}</h3>
+<h2>{{ title }}</h2>
+<h3 class="{{statusCssClass}}">{{ statusDisplayText }}</h3>
 <menu-component></menu-component>
 <router-view></router-view>
 `,
     data: function () {
         return {
             title: "Contas a Receber",
-            statusCssClass: 'sem-contas'
+            statusCssClass: 'sem-contas',
+            statusDisplayText: 'Nenhuma conta cadastrada'
         }
     },
-    computed: {
-        status: function () {
-            var bills = this.$root.$children[0].billsReceive;
-            var count = 0;
-            if (bills.length == 0) {
-                this.statusCssClass = 'sem-contas';
-                return 'Nenhuma conta cadastrada';
-            }
-            for (var i in bills) {
-                if (!bills[i].done) {
-                    count++;
+    created: function (){
+        this.updateStatus()
+    },methods: {
+        updateStatus(){
+            var self = this;
+            BillReceiveResource.query().then(function (response){
+                var bills = response.data;
+                var count = 0;
+                if (bills.length == 0) {
+                    self.statusCssClass = 'sem-contas';
+                    self.statusDisplayText =  'Nenhuma conta cadastrada';
                 }
-            }
+                for (var i in bills) {
+                    if (!bills[i].done) {
+                        count++;
+                    }
+                }
 
-            this.statusCssClass = !count ? 'livre-de-contas' : 'com-contas';
-            return !count ? 'Nenhuma conta a receber' : 'Existem ' + count + ' a receber';
+                self.statusCssClass = !count ? 'livre-de-contas' : 'com-contas';
+                self.statusDisplayText = !count ? 'Nenhuma conta a receber' : 'Existem ' + count + ' a receber';
+            })
+        }
+    },
+    events: {
+        'change-status': function(){
+            this.updateStatus();
         }
     }
 });

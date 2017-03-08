@@ -25,46 +25,31 @@ window.billDashboardComponent = Vue.extend({
 `,
     data: function () {
         return {
-            billsReceive : this.$root.$children[0].billsReceive,
-            billsPay : this.$root.$children[0].billsPay,
+            to_pay : 0,
+            paid : 0,
+            to_receive : 0,
+            received : 0,
         }
     },
-    computed: {
-        received: function(){
-            var received = 0;
-            for (var i in this.billsReceive) {
-                if (this.billsReceive[i].done) {
-                    received += this.billsReceive[i].value;
-                }
-            }
-            return received
-        },
-        paid: function(){
-            var paid = 0;
-            for (var i in this.billsPay) {
-                if (this.billsPay[i].done) {
-                    paid += this.billsPay[i].value;
-                }
-            }
-            return paid;
-        },
-        to_receive: function(){
-            var to_receive = 0;
-            for (var i in this.billsReceive) {
-                if (!this.billsReceive[i].done) {
-                    to_receive += this.billsReceive[i].value;
-                }
-            }
-            return to_receive
-        },
-        to_pay: function(){
-            var to_pay = 0;
-            for (var i in this.billsPay) {
-                if (!this.billsPay[i].done) {
-                    to_pay += this.billsPay[i].value;
-                }
-            }
-            return to_pay;
-        },
-    }
+    created: function (){
+        this.updateValues()
+    },
+    methods: {
+        updateValues(){
+            var self = this;
+            BillPayResource.totalPaid().then(function (response){
+                self.paid =  response.data.paid;
+            })
+            BillPayResource.totalToPay().then(function (response){
+                self.to_pay =  response.data.to_pay;
+            })
+            BillReceiveResource.totalReceived().then(function (response){
+                self.received =  response.data.received;
+            })
+            BillReceiveResource.totalToReceive().then(function (response){
+                self.to_receive =  response.data.to_receive;
+            })
+        }
+    },
+
 });
