@@ -23,9 +23,9 @@ window.billReceiveListComponent = Vue.extend({
             <!-- <tr v-for="o in bills"> para fazer for sem o indice -->
             <tr v-for="(index,o) in bills">
                 <td>{{index}}</td>
-                <td>{{o.date_due}}</td>
+                <td>{{o.date_due | dateFormat}}</td>
                 <td>{{o.name}}</td>
-                <td>{{o.value | currency 'R$ '}}</td>
+                <td>{{o.value | numberFormat}}</td>
                 <td  :class="{'pago' : o.done , 'nao-pago': !o.done}">
                     {{o.done | doneLabel }}
                 </td>

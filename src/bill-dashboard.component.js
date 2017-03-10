@@ -3,21 +3,21 @@ window.billDashboardComponent = Vue.extend({
     <div style="float: left;">
     <dl>
     <dt>Contas Recebidas</dt>
-    <dd>{{received | currency 'R$ '}}</dd>
+    <dd>{{received | numberFormat}}</dd>
     <dt>Contas Pagas</dt>
-    <dd>{{paid | currency 'R$ '}}</dd>
+    <dd>{{paid | numberFormat}}</dd>
     <dt>Saldo Atual</dt>
-    <dd>{{received-paid | currency 'R$ '}}</dd>
+    <dd>{{received-paid | numberFormat}}</dd>
     </dl>
     </div>
     <div  style="float: left; margin-left: 10px;">
     <dl>
     <dt>Contas A Receber</dt>
-    <dd>{{to_receive | currency 'R$ '}}</dd>
+    <dd>{{to_receive | numberFormat}}</dd>
     <dt>Contas A Pagar</dt>
-    <dd>{{to_pay | currency 'R$ '}}</dd>
+    <dd>{{to_pay | numberFormat}}</dd>
     <dt>Saldo Futuro</dt>
-    <dd>{{received-paid+to_receive-to_pay | currency 'R$ '}}</dd>
+    <dd>{{received-paid+to_receive-to_pay | numberFormat}}</dd>
     </dl>
 </div>
     

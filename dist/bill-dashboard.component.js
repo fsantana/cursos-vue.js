@@ -1,7 +1,7 @@
 "use strict";
 
 window.billDashboardComponent = Vue.extend({
-    template: "\n    <div style=\"float: left;\">\n    <dl>\n    <dt>Contas Recebidas</dt>\n    <dd>{{received | currency 'R$ '}}</dd>\n    <dt>Contas Pagas</dt>\n    <dd>{{paid | currency 'R$ '}}</dd>\n    <dt>Saldo Atual</dt>\n    <dd>{{received-paid | currency 'R$ '}}</dd>\n    </dl>\n    </div>\n    <div  style=\"float: left; margin-left: 10px;\">\n    <dl>\n    <dt>Contas A Receber</dt>\n    <dd>{{to_receive | currency 'R$ '}}</dd>\n    <dt>Contas A Pagar</dt>\n    <dd>{{to_pay | currency 'R$ '}}</dd>\n    <dt>Saldo Futuro</dt>\n    <dd>{{received-paid+to_receive-to_pay | currency 'R$ '}}</dd>\n    </dl>\n</div>\n    \n   \n",
+    template: "\n    <div style=\"float: left;\">\n    <dl>\n    <dt>Contas Recebidas</dt>\n    <dd>{{received | numberFormat}}</dd>\n    <dt>Contas Pagas</dt>\n    <dd>{{paid | numberFormat}}</dd>\n    <dt>Saldo Atual</dt>\n    <dd>{{received-paid | numberFormat}}</dd>\n    </dl>\n    </div>\n    <div  style=\"float: left; margin-left: 10px;\">\n    <dl>\n    <dt>Contas A Receber</dt>\n    <dd>{{to_receive | numberFormat}}</dd>\n    <dt>Contas A Pagar</dt>\n    <dd>{{to_pay | numberFormat}}</dd>\n    <dt>Saldo Futuro</dt>\n    <dd>{{received-paid+to_receive-to_pay | numberFormat}}</dd>\n    </dl>\n</div>\n    \n   \n",
     data: function data() {
         return {
             to_pay: 0,
