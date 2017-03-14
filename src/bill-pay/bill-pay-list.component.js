@@ -21,8 +21,8 @@ window.billPayListComponent = Vue.extend({
             </thead>
             <tbody>
             <!-- <tr v-for="o in bills"> para fazer for sem o indice -->
-            <tr v-for="(index,o) in bills">
-                <td>{{index}}</td>
+            <tr v-for="(index,o) in bills  | orderBy 'date_due'">
+                <td>{{index+1}}</td>
                 <td>{{o.date_due | dateFormat 'pt-BR'}}</td>
                 <td>{{o.name | upper}}</td>
                 <td>{{o.value | numberFormat 'pt-br' 'BRL'}}</td>
