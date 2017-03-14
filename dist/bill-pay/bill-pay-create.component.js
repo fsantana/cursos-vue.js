@@ -1,7 +1,7 @@
 'use strict';
 
 window.billPayCreateComponent = Vue.extend({
-    template: '\n    <form name="form" @submit.prevent="submit">\n        <label>Vencimento:</label>\n        <input type="text" v-model="bill.date_due | dateFormat"/>\n        <br><br>\n        <label>Nome:</label>\n        <select v-model="bill.name">\n            <option v-for="o in billNames" :value="o">{{o}}</option>\n        </select>\n        <br/><br/>\n        <label>Valor:</label>\n        <input type="text" v-model="bill.value | numberFormat"/>\n        <br/><br/>\n        <label>Paga:</label>\n        <input type="checkbox" v-model="bill.done"/>\n        <br/><br/>\n        <input type="submit" value="Enviar">\n    </form>\n',
+    template: '\n    <form name="form" @submit.prevent="submit">\n        <label>Vencimento:</label>\n        <input type="text" v-model="bill.date_due | dateFormat"/>\n        <br><br>\n        <label>Nome:</label>\n        <select v-model="bill.name">\n            <option v-for="o in billNames" :value="o">{{o | upper}}</option>\n        </select>\n        <br/><br/>\n        <label>Valor:</label>\n        <input type="text" v-model="bill.value | numberFormat"/>\n        <br/><br/>\n        <label>Paga:</label>\n        <input type="checkbox" v-model="bill.done"/>\n        <br/><br/>\n        <input type="submit" value="Enviar">\n    </form>\n',
     data: function data() {
         return {
             formType: 'insert',
@@ -25,8 +25,7 @@ window.billPayCreateComponent = Vue.extend({
         submit: function submit() {
             var _this = this;
 
-            //copia o objeto alterando a data com o metodo getDateDuo
-            var data = Vue.util.extend(this.bill, { date_due: this.getDateDue(this.bill.date_due) });
+            var data = this.bill.toObject();
 
             if (this.formType == 'insert') {
                 BillPayResource.save({}, data).then(function (response) {
@@ -34,7 +33,7 @@ window.billPayCreateComponent = Vue.extend({
                     _this.$router.go({ name: 'bill-pay.list' });
                 });
             } else {
-                BillPayResource.update({ id: data.id }, data).then(function (response) {
+                BillPayResource.update({ id: this.bill.id }, data).then(function (response) {
                     _this.$dispatch('change-status');
                     _this.$router.go({ name: 'bill-pay.list' });
                 });

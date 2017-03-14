@@ -6,7 +6,7 @@ window.billReceiveCreateComponent = Vue.extend({
         <br><br>
         <label>Nome:</label>
         <select v-model="bill.name">
-            <option v-for="o in billNames" :value="o">{{o}}</option>
+            <option v-for="o in billNames" :value="o">{{o | upper}}</option>
         </select>
         <br/><br/>
         <label>Valor:</label>
@@ -21,17 +21,8 @@ window.billReceiveCreateComponent = Vue.extend({
     data() {
         return {
             formType: 'insert',
-            billNames: [
-                'Salário',
-                'Bonificação',
-                'Extras',
-            ],
-            bill: {
-                date_deu: '',
-                name: '',
-                value: 0,
-                done: false
-            }
+            billNames: billReceiveNames,
+            bill: new Bill()
         }
     },
     created: function () {
@@ -43,8 +34,7 @@ window.billReceiveCreateComponent = Vue.extend({
     methods: {
         submit() {
 
-            //copia o objeto alterando a data com o metodo getDateDuo
-            let data = Vue.util.extend(this.bill, {date_due: this.getDateDue(this.bill.date_due)});
+            let data =this.bill.toObject();
 
             if (this.formType == 'insert') {
                 BillReceiveResource.save({},data).then((response) => {
@@ -52,16 +42,15 @@ window.billReceiveCreateComponent = Vue.extend({
                     this.$router.go({name: 'bill-receive.list'});
                 })
             }else{
-                BillReceiveResource.update({id: data.id},data).then((response) => {
+                BillReceiveResource.update({id: this.bill.id},data).then((response) => {
                     this.$dispatch('change-status');
                     this.$router.go({name: 'bill-receive.list'});
                 })
             }
-
         },
         getBill(id){
             BillReceiveResource.get({id: id}).then((response) => {
-                this.bill = response.data;
+                this.bill = new Bill(response.data);
             })
         },
         getDateDue(date_due){

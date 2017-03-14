@@ -6,7 +6,7 @@ window.billPayCreateComponent = Vue.extend({
         <br><br>
         <label>Nome:</label>
         <select v-model="bill.name">
-            <option v-for="o in billNames" :value="o">{{o}}</option>
+            <option v-for="o in billNames" :value="o">{{o | upper}}</option>
         </select>
         <br/><br/>
         <label>Valor:</label>
@@ -39,8 +39,7 @@ window.billPayCreateComponent = Vue.extend({
     methods: {
         submit() {
 
-            //copia o objeto alterando a data com o metodo getDateDuo
-            let data = Vue.util.extend(this.bill, {date_due: this.getDateDue(this.bill.date_due)});
+            let data = this.bill.toObject();
 
             if (this.formType == 'insert') {
                 BillPayResource.save({}, data).then((response) => {
@@ -48,7 +47,7 @@ window.billPayCreateComponent = Vue.extend({
                     this.$router.go({name: 'bill-pay.list'});
                 })
             } else {
-                BillPayResource.update({id: data.id}, data).then((response) => {
+                BillPayResource.update({id: this.bill.id}, data).then((response) => {
                     this.$dispatch('change-status');
                     this.$router.go({name: 'bill-pay.list'});
                 })
