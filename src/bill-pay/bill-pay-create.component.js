@@ -22,12 +22,7 @@ window.billPayCreateComponent = Vue.extend({
         return {
             formType: 'insert',
             billNames: billPayNames,
-            bill: {
-                date_due: '',
-                name: '',
-                value: 0,
-                done: false
-            }
+            bill: new Bill()
         }
     },
     created() {
