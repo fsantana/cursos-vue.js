@@ -1,24 +1,22 @@
-'use strict';
-
-var router = new VueRouter();
+let router = new VueRouter();
 
 router.map({
     '/bill-pays': {
         component: billPayComponent,
         subRoutes: {
-            '/': {
+            '/':{
                 name: 'bill-pay.list',
                 component: billPayListComponent
             },
-            '/create': {
+            '/create':{
                 name: 'bill-pay.create',
                 component: billPayCreateComponent
             },
-            '/:id/update': {
+            '/:id/update':{
                 name: 'bill-pay.update',
                 component: billPayCreateComponent
             },
-            '*': { //wildcard
+            '*':{ //wildcard
                 component: billPayListComponent
             }
         }
@@ -27,38 +25,40 @@ router.map({
     '/bill-receives': {
         component: billReceiveComponent,
         subRoutes: {
-            '/': {
+            '/':{
                 name: 'bill-receive.list',
                 component: billReceiveListComponent
             },
-            '/create': {
+            '/create':{
                 name: 'bill-receive.create',
                 component: billReceiveCreateComponent
             },
-            '/:id/update': {
+            '/:id/update':{
                 name: 'bill-receive.update',
                 component: billReceiveCreateComponent
             },
-            '*': { //wildcard
+            '*':{ //wildcard
                 component: billReceiveListComponent
             }
         }
     },
-    'dashboard': {
-        name: 'bill-dashboard',
+    'dashboard':{
+        name:'bill-dashboard',
         component: billDashboardComponent
     },
-    '*': {
+  /*  '*':{
         component: billDashboardComponent
-    }
-});
+    }*/
+})
 
 router.start({
     components: {
         'bill-component': billComponent
     }
 }, '#app');
-
-router.redirect({
-    '*': '/dashboard'
-});
+/*
+ router.redirect(
+ {
+ '*' : '/dashboard'
+ }
+ )*/

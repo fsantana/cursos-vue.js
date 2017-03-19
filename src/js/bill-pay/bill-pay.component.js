@@ -1,7 +1,4 @@
 window.billPayComponent = Vue.extend({
-    components: {
-        'menu-component': billPayMenuComponent,
-    },
     template: `
     <style type="text/css">
         .livre-de-contas{
@@ -17,7 +14,6 @@ window.billPayComponent = Vue.extend({
 
 <h2>{{ title }}</h2>
 <h3 class="{{statusCssClass}}">{{ statusDisplayText }}</h3>
-<menu-component></menu-component>
 <router-view></router-view>
 `,
     data() {

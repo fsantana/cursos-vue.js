@@ -1,7 +1,3 @@
-/*Vue.filter('doneLabel', function (value) {
- return value == 0 ? 'Não' : 'Sim';
- });*/
-Vue.filter('doneLabel', (value) => value == 0 ? "Não" : "Sim");
 //Two-way filters
 Vue.filter('numberFormat', {
     read(value, format = 'pt-BR', currency = 'BRL'){ //mostar a informação na view

@@ -1,13 +1,7 @@
-"use strict";
+'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-/*Vue.filter('doneLabel', function (value) {
- return value == 0 ? 'Não' : 'Sim';
- });*/
-Vue.filter('doneLabel', function (value) {
-    return value == 0 ? "Não" : "Sim";
-});
 //Two-way filters
 Vue.filter('numberFormat', {
     read: function read(value) {
@@ -15,7 +9,7 @@ Vue.filter('numberFormat', {
         var currency = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'BRL';
         //mostar a informação na view
         var number = 0;
-        if (value && (typeof value === "undefined" ? "undefined" : _typeof(value)) != undefined) {
+        if (value && (typeof value === 'undefined' ? 'undefined' : _typeof(value)) != undefined) {
             var numberRegex = value.toString().match(/\d+(\.{1}\d{1,2}){0,1}/g);
             number = numberRegex ? numberRegex[0] : numberRegex;
         }

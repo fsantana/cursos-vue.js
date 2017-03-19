@@ -1,10 +1,7 @@
 'use strict';
 
 window.billPayComponent = Vue.extend({
-    components: {
-        'menu-component': billPayMenuComponent
-    },
-    template: '\n    <style type="text/css">\n        .livre-de-contas{\n            color: blue;\n        }\n        .com-contas{\n            color: red;\n        }\n        .sem-contas {\n            color: gray;\n        }\n    </style>\n\n<h2>{{ title }}</h2>\n<h3 class="{{statusCssClass}}">{{ statusDisplayText }}</h3>\n<menu-component></menu-component>\n<router-view></router-view>\n',
+    template: '\n    <style type="text/css">\n        .livre-de-contas{\n            color: blue;\n        }\n        .com-contas{\n            color: red;\n        }\n        .sem-contas {\n            color: gray;\n        }\n    </style>\n\n<h2>{{ title }}</h2>\n<h3 class="{{statusCssClass}}">{{ statusDisplayText }}</h3>\n<router-view></router-view>\n',
     data: function data() {
         return {
             title: "Contas a pagar",
