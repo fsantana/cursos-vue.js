@@ -1,0 +1,32 @@
+// Material Icons
+@import url(http://fonts.googleapis.com/icon?family=Material+Icons);
+
+@import "node_modules/materialize-css/sass/components/color";
+
+@import "variables";
+
+@import "node_modules/materialize-css/sass/materialize";
+
+.modal {
+  max-width: 45%;
+}
+.btn, .btn-flat {
+  text-transform: inherit;
+  overflow-wrap: break-word;
+}
+.dashboard-card{
+  @extend .card;
+  .card-title {
+    font-size: 1.42rem;
+  }
+  .card-content{
+    padding: 1.3rem;
+  }
+}
+@media only screen and (min-width: 0) {
+  font-size: 12px;
+}
+
+@media only screen and (min-width: $medium-screen) {
+  font-size: 13.5px;
+}
