@@ -25,7 +25,7 @@ var Bill = function () {
             return {
                 date_due: date_due,
                 name: this.name,
-                value: this.value,
+                value: parseFloat(this.value),
                 done: this.done
             };
         }

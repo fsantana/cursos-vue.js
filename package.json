@@ -8,7 +8,7 @@
     "babel": "CHOKIDAR_USEPOLLING=true babel src --out-dir dist --watch",
     "sass": "node-sass ./src/sass -o ./dist/css ",
     "sass:w": "node-sass ./src/sass -o ./dist/css -w",
-    "start": "concurrently \"npm run babel\" \"npm run sass\"  \"npm run sass:w\" \"lite-server\" \" php -S 0.0.0.0:8000 -t api/ \""
+    "start": "concurrently \"npm run babel\" \"npm run sass\"  \"npm run sass:w\" \"lite-server\" \"gulp\"  \" php -S 0.0.0.0:8000 -t api/ \""
   },
   "author": "Fernando Santana",
   "license": "ISC",

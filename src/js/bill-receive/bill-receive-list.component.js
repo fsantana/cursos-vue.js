@@ -5,7 +5,14 @@ window.billReceiveListComponent = Vue.extend({
     template: `
     <div class="section">
         <div class="container">
-            <h5>Contas a receber</h5>
+            <div class="row">
+                <div class="col s7">
+                    <h5>Contas a receber</h5>
+                </div>
+                <div class="col s5">
+                   <h5><a class="waves-effect waves-light btn right" v-link="{ name: 'bill-receive.create'}"><i class="material-icons left">add</i>Adicionar</a></h5>
+                </div>
+            </div>
             <div class="row">
                 <table class="bordered highlight responsive-table z-depth-3">
                     <thead>
@@ -27,7 +34,7 @@ window.billReceiveListComponent = Vue.extend({
                         <td class="right-align">{{o.value | numberFormat 'pt-br' 'BRL'}}</td>
                         <td class="center-align" :class="{'green-text' : o.done , 'blue-text': !o.done}">
                             <i v-if="o.done" class="material-icons" title="Sim">done</i>
-                            <i v-else class="material-icons" title="none">clear</i>
+                            <i v-else class="material-icons" title="Não">clear</i>
                         </td>
                         <td class="center-align">
                             <a href="#" v-link="{name : 'bill-receive.update', params: {id: o.id}}"><i class="material-icons teal-text" title="Editar">edit</i></a>

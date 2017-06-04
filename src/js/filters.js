@@ -2,10 +2,13 @@
 Vue.filter('numberFormat', {
     read(value, format = 'pt-BR', currency = 'BRL'){ //mostar a informação na view
         let number = 0;
+
         if (value && typeof value != undefined) {
-            let numberRegex = value.toString().match(/\d+(\.{1}\d{1,2}){0,1}/g);
+            let numberRegex = value.toString().match(/-*\d+(\.{1}\d{1,2}){0,1}/g);
             number = numberRegex ? numberRegex[0] : numberRegex;
         }
+
+        /*number = value.toString();*/
         /*es5
          return new Number(number).toLocaleString('pt-BR',
          {

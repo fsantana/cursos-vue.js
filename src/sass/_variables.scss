@@ -1,0 +1,7 @@
+$primary-color: color("teal", "lighten-1");
+
+
+$primary-color-light: lighten($primary-color, 15%);
+$primary-color-dark: darken($primary-color, 15%);
+
+$secondary-color: color("red", "darken-5");

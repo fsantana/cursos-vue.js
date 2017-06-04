@@ -19,7 +19,7 @@ window.billReceiveComponent = Vue.extend({
                         <p class="card-title"></p>    <h5>{{ totalReceived | numberFormat}}</h5>
                     </div>
                 </div>
-             </div>            
+            </div>
         </div>
     </div>
 </div>

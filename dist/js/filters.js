@@ -9,10 +9,13 @@ Vue.filter('numberFormat', {
         var currency = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'BRL';
         //mostar a informação na view
         var number = 0;
+
         if (value && (typeof value === 'undefined' ? 'undefined' : _typeof(value)) != undefined) {
-            var numberRegex = value.toString().match(/\d+(\.{1}\d{1,2}){0,1}/g);
+            var numberRegex = value.toString().match(/-*\d+(\.{1}\d{1,2}){0,1}/g);
             number = numberRegex ? numberRegex[0] : numberRegex;
         }
+
+        /*number = value.toString();*/
         /*es5
          return new Number(number).toLocaleString('pt-BR',
          {

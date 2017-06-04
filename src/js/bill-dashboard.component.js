@@ -1,27 +1,64 @@
 window.billDashboardComponent = Vue.extend({
     template: `
-    <div style="float: left;">
-    <dl>
-    <dt>Contas Recebidas</dt>
-    <dd>{{received | numberFormat}}</dd>
-    <dt>Contas Pagas</dt>
-    <dd>{{paid | numberFormat}}</dd>
-    <dt>Saldo Atual</dt>
-    <dd>{{received-paid | numberFormat}}</dd>
-    </dl>
+    <div class="container">
+        <div class="row">
+            <div class="col l2 hide-on-small-and-down"></div>
+            <div class="col s6 l4">
+                <div class="dashboard-card">
+                    <div class="card-content">
+                        <div class="card-title">
+                            Contas Recebidas
+                        </div>
+                        {{received | numberFormat}}
+                    </div>
+                </div>
+                <div class="dashboard-card">
+                    <div class="card-content">
+                        <div class="card-title">
+                            Contas Pagas
+                        </div>
+                        {{paid | numberFormat}}
+                    </div>
+                </div>
+                <div class="dashboard-card">
+                    <div class="card-content">
+                        <div class="card-title">
+                            Saldo Atual
+                        </div>
+                        {{received-paid | numberFormat}}
+                    </div>
+                </div>
+            </div>
+            <div class="col s6 l4">
+                <div class="dashboard-card">
+                    <div class="card-content">
+                        <div class="card-title">
+                            Contas A Receber
+                        </div>
+                        {{to_receive | numberFormat}}
+                    </div>
+                </div>
+                <div class="dashboard-card">
+                    <div class="card-content">
+                        <div class="card-title">
+                            Contas A Pagar
+                        </div>
+                        {{to_pay | numberFormat}}
+                    </div>
+                </div>
+                <div class="dashboard-card">
+                    <div class="card-content">
+                        <div class="card-title">
+                            Saldo Futuro
+                        </div>
+                        {{received-paid+to_receive-to_pay | numberFormat}}
+                    </div>
+                </div>
+            </div>
+            <div class="col l2 hide-on-small-and-down"></div>
+        </div>
     </div>
-    <div  style="float: left; margin-left: 10px;">
-    <dl>
-    <dt>Contas A Receber</dt>
-    <dd>{{to_receive | numberFormat}}</dd>
-    <dt>Contas A Pagar</dt>
-    <dd>{{to_pay | numberFormat}}</dd>
-    <dt>Saldo Futuro</dt>
-    <dd>{{received-paid+to_receive-to_pay | numberFormat}}</dd>
-    </dl>
-</div>
-    
-   
+  
 `,
     data() {
         return {

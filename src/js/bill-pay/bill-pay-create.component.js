@@ -1,22 +1,46 @@
 window.billPayCreateComponent = Vue.extend({
     template: `
-    <form name="form" @submit.prevent="submit">
-        <label>Vencimento:</label>
-        <input type="text" v-model="bill.date_due | dateFormat"/>
-        <br><br>
-        <label>Nome:</label>
-        <select v-model="bill.name">
-            <option v-for="o in billNames" :value="o">{{o | upper}}</option>
-        </select>
-        <br/><br/>
-        <label>Valor:</label>
-        <input type="text" v-model="bill.value | numberFormat"/>
-        <br/><br/>
-        <label>Paga:</label>
-        <input type="checkbox" v-model="bill.done"/>
-        <br/><br/>
-        <input type="submit" value="Enviar">
-    </form>
+<div class="section">
+    <div class="container">
+        <h5 v-if="this.formType == 'insert'">Nova Conta</h5>
+        <h5 v-else>Editar Conta</h5>
+        <div class="row">
+            <form name="form" @submit.prevent="submit">
+                <div class="row">
+                    <div class="col s6">
+                        <label>Vencimento</label>
+                        <input type="text" v-model="bill.date_due | dateFormat" placeholder="Informe a data"/>
+                    </div>
+                    <div class="col s6">
+                        <label>Valor</label>
+                        <input type="text" v-model="bill.value | numberFormat"/>
+                    </div>
+                    
+                </div>
+                <div class="row">
+                    <div class="col s8">
+                        <label>Nome</label>
+                        <select v-model="bill.name" id="name" class="browser-default">
+                            <option value="" disabled selected>Escolha uma opção</option>
+                            <option v-for="o in billNames" :value="o">{{o | upper}}</option>
+                        </select>
+                    </div>
+                    <div class="input-field col s4">
+                    
+                        <input type="checkbox" v-model="bill.done" id="pago" class="filled-in"/>
+                        <label for="pago">Pago?</label>
+                    </div>
+                </div>
+       
+                <div class="row">
+                    <div class="col s12 ">
+                        <button class="btn right" type="submit">Enviar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 `,
     data() {
         return {
@@ -39,20 +63,20 @@ window.billPayCreateComponent = Vue.extend({
             if (this.formType == 'insert') {
                 BillPayResource.save({}, data).then((response) => {
                     this.$dispatch('change-status');
+                    Materialize.toast('Conta criada com sucesso!',4000);
                     this.$router.go({name: 'bill-pay.list'});
                 })
             } else {
                 BillPayResource.update({id: this.bill.id}, data).then((response) => {
                     this.$dispatch('change-status');
+                    Materialize.toast('Conta alterada com sucesso!',4000);
                     this.$router.go({name: 'bill-pay.list'});
                 })
             }
-
-
         },
         getBill(id){
             BillPayResource.get({id: id}).then((response) => {
-                this.bill = response.data;
+                this.bill = new Bill(response.data);
             })
         },
         getDateDue(date_due){
