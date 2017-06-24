@@ -1,3 +1,24 @@
+require('../sass/app.scss');
+require('./filters');
+require('./resources');
+require(['./bill-pay/bill-pay.component',
+         './bill-pay/bill-pay-list.component',
+         './bill-pay/bill-pay-create.component',
+         './bill-receive/bill-receive.component',
+         './bill-receive/bill-receive-list.component',
+         './bill-receive/bill-receive-create.component',
+         './bill.component',
+         './bill-dashboard.component',
+
+    ],
+    function (billPayComponent,
+              billPayListComponent,
+              billPayCreateComponent,
+              billReceiveComponent,
+              billReceiveListComponent,
+              billReceiveCreateComponent,
+              billComponent,
+              billDashboardComponent) {
 let router = new VueRouter();
 
 router.map({
@@ -55,7 +76,8 @@ router.start({
     components: {
         'bill-component': billComponent
     }
-}, '#app');
+}, '#app')
+});
 /*
  router.redirect(
  {

@@ -24,15 +24,7 @@ window.BillReceiveResource = Vue.resource('bills-receive{/id}',{},{
     }
 })
 
-const  billPayNames = [
-    'Conta de Luz',
-    'Conta de Água',
-    'Conta de Telefone',
-    'Supermercado',
-    'Cartão de Crédito',
-    'Empréstimo',
-    'Gasolina',
-];
 
-const billReceiveNames = ['Salário', 'Bonificação', 'Extras'];
+
+
 

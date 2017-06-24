@@ -1,4 +1,6 @@
-window.billReceiveCreateComponent = Vue.extend({
+const billReceiveNames = ['Salário', 'Bonificação', 'Extras'];
+let Bill = require('../bill');
+module.exports = {
     template: `
 <div class="section">
     <div class="container">
@@ -88,4 +90,4 @@ window.billReceiveCreateComponent = Vue.extend({
             return dateDueObject.toISOString().split('T')[0];
         }
     }
-});
+}

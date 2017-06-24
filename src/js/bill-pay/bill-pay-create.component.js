@@ -1,4 +1,14 @@
-window.billPayCreateComponent = Vue.extend({
+const  billPayNames = [
+    'Conta de Luz',
+    'Conta de Água',
+    'Conta de Telefone',
+    'Supermercado',
+    'Cartão de Crédito',
+    'Empréstimo',
+    'Gasolina',
+];
+let Bill = require('../bill');
+module.exports = {
     template: `
 <div class="section">
     <div class="container">
@@ -88,4 +98,4 @@ window.billPayCreateComponent = Vue.extend({
             return dateDueObject.toISOString().split('T')[0];
         }
     }
-});
+}

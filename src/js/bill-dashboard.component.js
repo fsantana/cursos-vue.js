@@ -1,4 +1,4 @@
-window.billDashboardComponent = Vue.extend({
+module.exports = {
     template: `
     <div class="container">
         <div class="row">
@@ -75,17 +75,17 @@ window.billDashboardComponent = Vue.extend({
         updateValues(){
             BillPayResource.totalPaid().then((response)=>{
                 this.paid =  response.data.paid;
-            })
+            });
             BillPayResource.totalToPay().then((response)=>{
                 this.to_pay =  response.data.to_pay;
-            })
+            });
             BillReceiveResource.totalReceived().then((response)=>{
                 this.received =  response.data.received;
-            })
+            });
             BillReceiveResource.totalToReceive().then((response)=>{
                 this.to_receive =  response.data.to_receive;
-            })
+            });
         }
     },
 
-});
+}
