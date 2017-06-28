@@ -1,54 +1,48 @@
-import {BillReceiveResource} from '../resources';
-import ModalComponent from '../modal.component';
-export default {
-    components: {
-        'modal': ModalComponent
-    },
-    template: `
+<template>
     <div class="section">
-        <div class="container">
-            <div class="row">
-                <div class="col s7">
-                    <h5>Contas a receber</h5>
-                </div>
-                <div class="col s5">
-                   <h5><a class="waves-effect waves-light btn right" v-link="{ name: 'bill-receive.create'}"><i class="material-icons left">add</i>Adicionar</a></h5>
-                </div>
+    <div class="container">
+        <div class="row">
+            <div class="col s7">
+                <h5>Contas a receber</h5>
             </div>
-            <div class="row">
-                <table class="bordered highlight responsive-table z-depth-3">
-                    <thead>
-                    <tr class="center-align">
-                        <th>#</th>
-                        <th>Recebimento</th>
-                        <th>Nome</th>
-                        <th>Valor</th>
-                        <th>Recebido?</th>
-                        <th>Ação</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <!-- <tr v-for="o in bills"> para fazer for sem o indice -->
-                    <tr v-for="(index,o) in bills | orderBy 'date_due'">
-                        <td>{{index+1}}</td>
-                        <td>{{o.date_due | dateFormat 'pt-BR'}}</td>
-                        <td>{{o.name | upper}}</td>
-                        <td class="right-align">{{o.value | numberFormat 'pt-br' 'BRL'}}</td>
-                        <td class="center-align" :class="{'green-text' : o.done , 'blue-text': !o.done}">
-                            <i v-if="o.done" class="material-icons" title="Sim">done</i>
-                            <i v-else class="material-icons" title="Não">clear</i>
-                        </td>
-                        <td class="center-align">
-                            <a href="#" v-link="{name : 'bill-receive.update', params: {id: o.id}}"><i class="material-icons teal-text" title="Editar">edit</i></a>
-                            <a href="#" @click.prevent="openModalDelete(o)"><i class="material-icons red-text lighten-5" title="Excluir">delete</i></a>
-            
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+            <div class="col s5">
+                <h5><a class="waves-effect waves-light btn right" v-link="{ name: 'bill-receive.create'}"><i class="material-icons left">add</i>Adicionar</a></h5>
             </div>
         </div>
+        <div class="row">
+            <table class="bordered highlight responsive-table z-depth-3">
+                <thead>
+                <tr class="center-align">
+                    <th>#</th>
+                    <th>Recebimento</th>
+                    <th>Nome</th>
+                    <th>Valor</th>
+                    <th>Recebido?</th>
+                    <th>Ação</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- <tr v-for="o in bills"> para fazer for sem o indice -->
+                <tr v-for="(index,o) in bills | orderBy 'date_due'">
+                    <td>{{index+1}}</td>
+                    <td>{{o.date_due | dateFormat 'pt-BR'}}</td>
+                    <td>{{o.name | upper}}</td>
+                    <td class="right-align">{{o.value | numberFormat 'pt-br' 'BRL'}}</td>
+                    <td class="center-align" :class="{'green-text' : o.done , 'blue-text': !o.done}">
+                        <i v-if="o.done" class="material-icons" title="Sim">done</i>
+                        <i v-else class="material-icons" title="Não">clear</i>
+                    </td>
+                    <td class="center-align">
+                        <a href="#" v-link="{name : 'bill-receive.update', params: {id: o.id}}"><i class="material-icons teal-text" title="Editar">edit</i></a>
+                        <a href="#" @click.prevent="openModalDelete(o)"><i class="material-icons red-text lighten-5" title="Excluir">delete</i></a>
+
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
+</div>
     <modal :modal="modal">
         <div slot="content" v-if="billToDelete">
             <h4>Mensagem de confirmação</h4>
@@ -64,8 +58,15 @@ export default {
             <button class="btn btn-flat waves-effect waves-red modal-close modal-action">Cancelar</button>
         </div>
     </modal>
-    
-`,
+
+</template>
+<script>
+import {BillReceiveResource} from '../resources';
+import ModalComponent from '../Modal.vue';
+export default {
+    components: {
+        'modal': ModalComponent
+    },
     data() {
         return {
             bills: [],
@@ -99,3 +100,4 @@ export default {
         }
     }
 }
+</script>

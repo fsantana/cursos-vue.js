@@ -1,3 +1,6 @@
+var webpack = require('webpack');
+var ExtractTextPlugin = require("extract-text-webpack-plugin"); //para separar os arquivos que serão chamados separadamente
+var extractCss = new ExtractTextPlugin('css/app.css');
 module.exports = {
 	entry: './src/js/main.js',
 	output: {
@@ -5,15 +8,20 @@ module.exports = {
 		filename: 'app.bundle.js',
 		publicPath: '/dist/'
 	},
+    plugins:[
+        new webpack.ProvidePlugin({
+            'window.$': 'jquery',
+            'window.JQuery' : 'jquery'
+        }),
+        extractCss,
+        new webpack.HotModuleReplacementPlugin()
+    ],
 	module: {
 		loaders: [
 			{
 				test: /\.js$/,
 				exclude: /(node_modules|bower_components)/,
-				loader: 'babel',
-				query: {
-					presets: ['es2015']
-				}
+				loader: 'babel'
 			},
 			{
 				test: /\.(woff|woff2|ttf|svg|eot)$/,
@@ -21,11 +29,22 @@ module.exports = {
 			},
 			{
 				test: /\.scss$/,
-				loaders: ['style','css','sass']
+				loader: extractCss.extract(['css','sass'])
+			},
+			{
+				test: /\.vue$/,
+				loader: 'vue'
 			}
 		]
 	},
+    devtool: 'source-map',
     devServer: {
-	    host: '0.0.0.0'
+	    host: '0.0.0.0',
+        disableHostCheck: true,
+        inline: true,
+        watchOptions: {
+	        poll: true,
+            aggregateTimeout: 500
+        }
     }
 }

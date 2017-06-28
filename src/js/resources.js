@@ -1,6 +1,6 @@
 Vue.http.options.root = 'http://192.168.10.10:8000/api';
 
-window.BillPayResource = Vue.resource('bills-pay{/id}',{},{
+let BillPayResource = Vue.resource('bills-pay{/id}',{},{
     totalToPay : {
         method: 'GET',
         url: 'bills-pay/total-to-pay'
@@ -12,7 +12,7 @@ window.BillPayResource = Vue.resource('bills-pay{/id}',{},{
     }
 })
 
-window.BillReceiveResource = Vue.resource('bills-receive{/id}',{},{
+let BillReceiveResource = Vue.resource('bills-receive{/id}',{},{
     totalToReceive : {
         method: 'GET',
         url: 'bills-receive/total-to-receive'
@@ -24,6 +24,7 @@ window.BillReceiveResource = Vue.resource('bills-receive{/id}',{},{
     }
 })
 
+export {BillPayResource,BillReceiveResource}
 
 
 
