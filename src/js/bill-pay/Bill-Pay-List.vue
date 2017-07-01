@@ -51,13 +51,36 @@
             </div>
         </div>
     </div>
+    <modal :modal="modal">
+        <div slot="content" v-if="billToDelete">
+            <h4>Mensagem de confirmação</h4>
+            <p><strong>Deseja excluir esta conta?</strong></p>
+            <div class="divider"></div>
+            <p>Nome: <strong>{{billToDelete.name | upper}}</strong></p>
+            <p>Valor: <strong>{{billToDelete.value | numberFormat}}</strong></p>
+            <p>Data de Vencimento: <strong>{{billToDelete.date_due | dateFormat}}</strong></p>
+            <div class="divider"></div>
+        </div>
+        <div slot="footer">
+            <button class="btn btn-flat waves-effect green lighten-2 modal-close modal-action" @click="deleteBill()">OK</button>
+            <button class="btn btn-flat waves-effect waves-red modal-close modal-action">Cancelar</button>
+        </div>
+    </modal>
 </template>
 <script>
     import {BillPayResource} from '../resources';
+    import ModalComponent from '../Modal.vue';
     export default {
+        components: {
+            'modal': ModalComponent
+        },
         data() {
             return {
-                bills: []
+                bills: [],
+                billToDelete: null,
+                modal: {
+                    id: 'modal-delete'
+                }
             }
         },
         created() {
@@ -67,13 +90,19 @@
         },
         methods: {
 
-            deleteBill(bill) {
-                if (confirm('Deseja excluir a conta de ' + bill.name + ' com vencimento em ' + bill.date_due + ' ?')) {
-                    BillPayResource.delete({id: bill.id}).then((response) => {
-                        this.bills.$remove(bill);
-                        this.$dispatch('change-status');
-                    });
-                }
+            deleteBill() {
+
+                BillReceiveResource.delete({id: this.billToDelete.id}).then((response) => {
+                    this.bills.$remove(this.billToDelete);
+                    this.billToDelete = null;
+                    Materialize.toast('Conta excluída com sucesso!', 4000);
+                    this.$dispatch('change-status');
+                });
+
+            },
+            openModalDelete(bill){
+                this.billToDelete = bill;
+                $('#modal-delete').modal('open');
             }
         }
     }

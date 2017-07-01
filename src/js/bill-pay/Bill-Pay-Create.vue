@@ -75,13 +75,13 @@
                 if (this.formType == 'insert') {
                     BillPayResource.save({}, data).then((response) => {
                         this.$dispatch('change-status');
-                        alert('Conta criada com sucesso!');
+                        Materialize.toast('Conta criada com sucesso!', 4000);
                         this.$router.go({name: 'bill-pay.list'});
                     })
                 } else {
                     BillPayResource.update({id: this.bill.id}, data).then((response) => {
                         this.$dispatch('change-status');
-                        alert('Conta alterada com sucesso!');
+                        Materialize.toast('Conta alterada com sucesso!', 4000);
                         this.$router.go({name: 'bill-pay.list'});
                     })
                 }

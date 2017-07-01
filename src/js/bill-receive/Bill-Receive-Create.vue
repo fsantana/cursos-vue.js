@@ -44,7 +44,11 @@
 <script>
     import {BillReceiveResource} from '../resources';
     import {Bill} from '../bill';
-    const billReceiveNames = ['Salário', 'Bonificação', 'Extras'];
+    const billReceiveNames = [
+        'Salário',
+        'Bonificação',
+        'Extras'
+    ];
     export default {
         data() {
             return {

@@ -30,7 +30,7 @@
     export default {
         data() {
             return {
-                title: "Contas a pagar",
+                title: "Contas a Pagar",
                 statusCssClass: 'sem-contas',
                 statusDisplayText: 'Nenhuma conta cadastrada',
                 totalToPay: 0,
